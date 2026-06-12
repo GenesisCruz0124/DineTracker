@@ -29,7 +29,7 @@ export default function MealForm({ onAdd }) {
     }
 
     if (!form.amount || Number.isNaN(parsedAmount) || parsedAmount <= 0) {
-      setError('Please enter a valid amount greater than $0.')
+      setError('Please enter a valid amount greater than ₱0.')
       return
     }
 
@@ -71,7 +71,7 @@ export default function MealForm({ onAdd }) {
           </label>
           <div className="relative">
             <span className="pointer-events-none absolute inset-y-0 left-0 flex items-center pl-3.5 text-slate-400 text-lg font-medium">
-              $
+              ₱
             </span>
             <input
               id="amount"
@@ -83,7 +83,7 @@ export default function MealForm({ onAdd }) {
               placeholder="0.00"
               value={form.amount}
               onChange={updateField('amount')}
-              className="w-full rounded-xl bg-slate-900 border border-slate-700 pl-8 pr-3 py-3 text-lg font-semibold text-slate-100 placeholder-slate-500 focus:outline-none focus:ring-2 focus:ring-emerald-500/60 focus:border-emerald-500"
+              className="w-full rounded-xl bg-slate-900 border border-slate-700 pl-9 pr-3 py-3 text-lg font-semibold text-slate-100 placeholder-slate-500 focus:outline-none focus:ring-2 focus:ring-emerald-500/60 focus:border-emerald-500"
             />
           </div>
         </div>

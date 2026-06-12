@@ -1,7 +1,7 @@
 export const formatCurrency = (amount) =>
-  new Intl.NumberFormat('en-US', {
+  new Intl.NumberFormat('en-PH', {
     style: 'currency',
-    currency: 'USD',
+    currency: 'PHP',
   }).format(amount || 0)
 
 export const formatDate = (isoDate) => {
