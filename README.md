@@ -4,6 +4,8 @@ A localized, mobile-first food spending tracker. Log meals, browse your
 spending history, and see insights about where your money goes — all
 stored locally in your browser via `localStorage`, no backend required.
 
+**Live app:** https://genesiscruz0124.github.io/DineTracker/
+
 ## Features
 
 - **Log a Meal** — quick-entry form for amount, establishment, category
