@@ -13,11 +13,20 @@ const EMPTY_FORM = {
 export default function MealForm({ onAdd, entries = [] }) {
   const [form, setForm] = useState(EMPTY_FORM)
   const [error, setError] = useState('')
+  const [showSuggestions, setShowSuggestions] = useState(false)
 
   const knownEstablishments = [...new Set(entries.map((entry) => entry.name))]
+  const filteredEstablishments = knownEstablishments.filter((name) =>
+    name.toLowerCase().includes(form.name.trim().toLowerCase())
+  )
 
   const updateField = (field) => (event) => {
     setForm((prev) => ({ ...prev, [field]: event.target.value }))
+  }
+
+  const selectEstablishment = (name) => {
+    setForm((prev) => ({ ...prev, name }))
+    setShowSuggestions(false)
   }
 
   const handleSubmit = (event) => {
@@ -94,22 +103,36 @@ export default function MealForm({ onAdd, entries = [] }) {
           <label htmlFor="name" className="block text-sm font-medium text-slate-400 mb-1.5">
             Establishment
           </label>
-          <input
-            id="name"
-            name="name"
-            type="text"
-            autoComplete="off"
-            list="establishment-options"
-            placeholder="e.g. Chipotle, Local Diner"
-            value={form.name}
-            onChange={updateField('name')}
-            className="w-full rounded-xl bg-slate-900 border border-slate-700 px-3.5 py-3 text-base text-slate-100 placeholder-slate-500 focus:outline-none focus:ring-2 focus:ring-emerald-500/60 focus:border-emerald-500"
-          />
-          <datalist id="establishment-options">
-            {knownEstablishments.map((name) => (
-              <option key={name} value={name} />
-            ))}
-          </datalist>
+          <div className="relative">
+            <input
+              id="name"
+              name="name"
+              type="text"
+              autoComplete="off"
+              placeholder="e.g. Chipotle, Local Diner"
+              value={form.name}
+              onChange={updateField('name')}
+              onFocus={() => setShowSuggestions(true)}
+              onBlur={() => setTimeout(() => setShowSuggestions(false), 100)}
+              className="w-full rounded-xl bg-slate-900 border border-slate-700 px-3.5 py-3 text-base text-slate-100 placeholder-slate-500 focus:outline-none focus:ring-2 focus:ring-emerald-500/60 focus:border-emerald-500"
+            />
+            {showSuggestions && filteredEstablishments.length > 0 && (
+              <ul className="absolute z-10 mt-1.5 max-h-48 w-full overflow-y-auto rounded-xl border border-slate-700 bg-slate-900 shadow-lg shadow-black/40">
+                {filteredEstablishments.map((name) => (
+                  <li key={name}>
+                    <button
+                      type="button"
+                      onMouseDown={(event) => event.preventDefault()}
+                      onClick={() => selectEstablishment(name)}
+                      className="block w-full px-3.5 py-2.5 text-left text-base text-slate-200 hover:bg-slate-800 active:bg-slate-700"
+                    >
+                      {name}
+                    </button>
+                  </li>
+                ))}
+              </ul>
+            )}
+          </div>
         </div>
 
         <div className="grid grid-cols-2 gap-3">
