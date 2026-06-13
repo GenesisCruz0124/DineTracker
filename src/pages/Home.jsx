@@ -9,7 +9,7 @@ export default function Home({ entries, onAdd, onDelete }) {
 
   return (
     <div className="space-y-5">
-      <MealForm onAdd={onAdd} />
+      <MealForm onAdd={onAdd} entries={entries} />
 
       <SummaryCard total={monthTotal} count={monthEntries.length} label={`Spent in ${getMonthLabel()}`} />
 

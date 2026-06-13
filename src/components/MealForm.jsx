@@ -10,9 +10,11 @@ const EMPTY_FORM = {
   date: todayISO(),
 }
 
-export default function MealForm({ onAdd }) {
+export default function MealForm({ onAdd, entries = [] }) {
   const [form, setForm] = useState(EMPTY_FORM)
   const [error, setError] = useState('')
+
+  const knownEstablishments = [...new Set(entries.map((entry) => entry.name))]
 
   const updateField = (field) => (event) => {
     setForm((prev) => ({ ...prev, [field]: event.target.value }))
@@ -97,11 +99,17 @@ export default function MealForm({ onAdd }) {
             name="name"
             type="text"
             autoComplete="off"
+            list="establishment-options"
             placeholder="e.g. Chipotle, Local Diner"
             value={form.name}
             onChange={updateField('name')}
             className="w-full rounded-xl bg-slate-900 border border-slate-700 px-3.5 py-3 text-base text-slate-100 placeholder-slate-500 focus:outline-none focus:ring-2 focus:ring-emerald-500/60 focus:border-emerald-500"
           />
+          <datalist id="establishment-options">
+            {knownEstablishments.map((name) => (
+              <option key={name} value={name} />
+            ))}
+          </datalist>
         </div>
 
         <div className="grid grid-cols-2 gap-3">
